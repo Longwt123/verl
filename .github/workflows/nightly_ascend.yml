@@ -406,6 +406,10 @@ jobs:
       - name: Clone FSDPTurbo
         run: |
           git clone https://gitcode.com/Ascend/FSDPTurbo.git /FSDPTurbo
+          # Pin to the commit right before 3fd503c, which calls
+          # torch.accelerator.current_device() and breaks on torch 2.10.
+          # Remove this pin once FSDPTurbo fixes it upstream.
+          git -C /FSDPTurbo checkout 0a4b3bc3965fac3fb7423115da2ab0627dfe0076
       - name: Check final pip list
         run: |
           pip list
